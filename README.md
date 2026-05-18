@@ -38,7 +38,8 @@ npm run build
 ```
 
 To report a published public GitHub repo to LobeHub from an authenticated
-environment:
+environment. The helper reads `MARKET_CLIENT_ID` / `MARKET_CLIENT_SECRET` or
+the local credentials created by `npx -y @lobehub/market-cli register`:
 
 ```bash
 LOBEHUB_SKILL_GIT_URL=https://github.com/<owner>/<repo> npm run submit:lobehub

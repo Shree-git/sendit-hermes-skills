@@ -155,6 +155,7 @@ function validateScripts() {
   assertIncludes(callback, 'redactCallbackUrl', 'complete-oauth-callback.mjs');
   assertIncludes(reportLobeHub, 'reportGitHubSkill', 'report-lobehub.mjs');
   assertIncludes(reportLobeHub, 'LOBEHUB_SKILL_GIT_URL', 'report-lobehub.mjs');
+  assertIncludes(reportLobeHub, '.lobehub-market', 'report-lobehub.mjs');
 
   runNode([join(scriptsDir, 'complete-oauth-callback.mjs'), '--self-test']);
 }

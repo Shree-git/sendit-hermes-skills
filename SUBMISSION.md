@@ -80,7 +80,9 @@ for Hermes deployments where the browser runs on a different device.
 Primary target: LobeHub Skills Marketplace GitHub import.
 
 After publishing the standalone GitHub repository, report it from an
-authenticated environment:
+authenticated environment. The helper reads `MARKET_CLIENT_ID` /
+`MARKET_CLIENT_SECRET` or the local credentials created by
+`npx -y @lobehub/market-cli register`:
 
 ```bash
 LOBEHUB_SKILL_GIT_URL=https://github.com/<owner>/<repo> npm run submit:lobehub
