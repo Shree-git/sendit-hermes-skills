@@ -131,13 +131,17 @@ function validateDocs() {
 
   assertIncludes(telegram, canonicalMcpUrl, 'TELEGRAM_SETUP.md');
   assertIncludes(telegram, 'Do not ask the user for a SendIt API key', 'TELEGRAM_SETUP.md');
-  assertIncludes(submission, 'hermes skills tap add <owner>/<repo>', 'SUBMISSION.md');
-  assertIncludes(submission, 'hermes skills install <owner>/<repo>/skills/sendit', 'SUBMISSION.md');
+  assertIncludes(submission, 'hermes skills tap add Shree-git/sendit-hermes-skills', 'SUBMISSION.md');
+  assertIncludes(submission, 'hermes skills install Shree-git/sendit-hermes-skills/skills/sendit', 'SUBMISSION.md');
   assertIncludes(submission, 'optional-skills/mcp/sendit/', 'SUBMISSION.md');
   assertIncludes(submission, 'reportGitHubSkill', 'SUBMISSION.md');
   assertIncludes(submission, 'npm run submit:lobehub', 'SUBMISSION.md');
+  assertIncludes(submission, 'https://github.com/NousResearch/hermes-agent/pull/27727', 'SUBMISSION.md');
+  assertIncludes(submission, 'https://lobehub.com/skills/shree-git-sendit-hermes-skills-sendit', 'SUBMISSION.md');
   assertIncludes(readme, 'skills/sendit/', 'README.md');
   assertIncludes(readme, 'npm run submit:lobehub', 'README.md');
+  assertIncludes(readme, 'https://github.com/Shree-git/sendit-hermes-skills', 'README.md');
+  assertIncludes(readme, 'https://lobehub.com/skills/shree-git-sendit-hermes-skills-sendit', 'README.md');
 }
 
 function validateScripts() {

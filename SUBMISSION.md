@@ -12,19 +12,25 @@ The standalone tap contents are written to `dist/sendit-hermes-skills/`.
 Publish that directory as a public GitHub repository, for example
 `Shree-git/sendit-hermes-skills`.
 
+Published tap:
+
+```text
+https://github.com/Shree-git/sendit-hermes-skills
+```
+
 ## Hermes Tap Submission
 
 Install from the public tap:
 
 ```bash
-hermes skills tap add <owner>/<repo>
-hermes skills install <owner>/<repo>/sendit
+hermes skills tap add Shree-git/sendit-hermes-skills
+hermes skills install Shree-git/sendit-hermes-skills/sendit
 ```
 
 Direct GitHub install without adding the tap:
 
 ```bash
-hermes skills install <owner>/<repo>/skills/sendit
+hermes skills install Shree-git/sendit-hermes-skills/skills/sendit
 ```
 
 Smoke test after install:
@@ -66,6 +72,12 @@ Suggested PR title:
 Add SendIt remote MCP OAuth skill
 ```
 
+Submitted PR:
+
+```text
+https://github.com/NousResearch/hermes-agent/pull/27727
+```
+
 Suggested PR summary:
 
 ```text
@@ -85,7 +97,7 @@ authenticated environment. The helper reads `MARKET_CLIENT_ID` /
 `npx -y @lobehub/market-cli register`:
 
 ```bash
-LOBEHUB_SKILL_GIT_URL=https://github.com/<owner>/<repo> npm run submit:lobehub
+LOBEHUB_SKILL_GIT_URL=https://github.com/Shree-git/sendit-hermes-skills npm run submit:lobehub
 ```
 
 The script wraps the LobeHub Market SDK call below:
@@ -101,7 +113,7 @@ const sdk = new MarketSDK({
 });
 
 const result = await sdk.marketSkills.reportGitHubSkill({
-  gitUrl: "https://github.com/<owner>/<repo>",
+  gitUrl: "https://github.com/Shree-git/sendit-hermes-skills",
   branch: "main",
 });
 
@@ -117,12 +129,18 @@ Marketplace copy:
 - Name: `SendIt`
 - Identifier: `sendit`
 - Category: `social-media`
-- Repository: `https://github.com/<owner>/<repo>`
+- Repository: `https://github.com/Shree-git/sendit-hermes-skills`
 - Tags: `sendit`, `social-media`, `mcp`, `oauth`, `publishing`, `scheduling`,
   `analytics`
 - Description: `Use SendIt from Hermes Agent for social publishing, scheduling,
   platform connection, media upload, content validation, previews, and analytics
   through remote MCP OAuth.`
+
+Submitted LobeHub page:
+
+```text
+https://lobehub.com/skills/shree-git-sendit-hermes-skills-sendit
+```
 
 ## Acceptance Notes
 

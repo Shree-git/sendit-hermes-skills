@@ -56,14 +56,14 @@ LOBEHUB_SKILL_GIT_URL=https://github.com/<owner>/<repo> npm run submit:lobehub
 From a published tap repository:
 
 ```bash
-hermes skills tap add <owner>/<repo>
-hermes skills install <owner>/<repo>/sendit
+hermes skills tap add Shree-git/sendit-hermes-skills
+hermes skills install Shree-git/sendit-hermes-skills/sendit
 ```
 
 Without adding the tap first, users can install the skill directly:
 
 ```bash
-hermes skills install <owner>/<repo>/skills/sendit
+hermes skills install Shree-git/sendit-hermes-skills/skills/sendit
 ```
 
 For remote VPS or Telegram-only setup, upload the generated archive or this
@@ -75,3 +75,9 @@ LobeHub imports skills from public GitHub repositories that contain `SKILL.md`
 bundles. Publish the generated standalone repo contents, then report it through
 the LobeHub Market SDK or the logged-in marketplace submission flow. See
 `SUBMISSION.md` for the exact checklist.
+
+Submitted locations:
+
+- Hermes tap: https://github.com/Shree-git/sendit-hermes-skills
+- Hermes upstream PR: https://github.com/NousResearch/hermes-agent/pull/27727
+- LobeHub: https://lobehub.com/skills/shree-git-sendit-hermes-skills-sendit
