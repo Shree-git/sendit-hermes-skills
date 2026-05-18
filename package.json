@@ -1,6 +1,6 @@
 {
   "name": "@senditapp/hermes-skills",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "private": true,
   "description": "SendIt Hermes Agent skill tap and LobeHub Skills Marketplace source.",
   "type": "module",
@@ -14,8 +14,10 @@
     "node": ">=20"
   },
   "files": [
+    "LICENSE",
     "README.md",
     "SUBMISSION.md",
+    "scripts",
     "skills"
   ],
   "license": "MIT",

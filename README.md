@@ -19,9 +19,11 @@ submission profile and exposes a reduced tool catalog.
 
 ```text
 integrations/hermes-skill/
+├── LICENSE
 ├── skills/sendit/              # Tap-compatible skill source
 │   ├── SKILL.md
 │   ├── TELEGRAM_SETUP.md
+│   ├── references/
 │   └── scripts/
 ├── scripts/
 │   ├── build-release.mjs
@@ -29,6 +31,9 @@ integrations/hermes-skill/
 ├── SUBMISSION.md
 └── package.json
 ```
+
+The installed `SKILL.md` is intentionally concise. Detailed VPS OAuth setup,
+publishing examples, and security scope live in `skills/sendit/references/`.
 
 ## Development
 

@@ -59,7 +59,8 @@ skills/social-media/sendit/
 
 PR checklist:
 
-- Include only `SKILL.md`, `TELEGRAM_SETUP.md`, and `scripts/*.mjs`.
+- Include only `SKILL.md`, `TELEGRAM_SETUP.md`, `references/*.md`, and
+  `scripts/*.mjs`.
 - Keep `https://sendit.infiniteappsai.com/api/mcp` as the MCP URL.
 - Mention that SendIt uses remote MCP OAuth and does not require an API key.
 - Include the VPS/Telegram OAuth callback replay flow in the PR description.
@@ -129,7 +130,12 @@ Marketplace copy:
 - Name: `SendIt`
 - Identifier: `sendit`
 - Category: `social-media`
+- LobeHub display category note: imported skill detail pages currently classify
+  this under `marketing-sales`; keep the manifest category as `social-media`.
 - Repository: `https://github.com/Shree-git/sendit-hermes-skills`
+- License: `MIT`
+- License URL: `https://github.com/Shree-git/sendit-hermes-skills/blob/main/LICENSE`
+- Version: `0.2.1`
 - Tags: `sendit`, `social-media`, `mcp`, `oauth`, `publishing`, `scheduling`,
   `analytics`
 - Description: `Use SendIt from Hermes Agent for social publishing, scheduling,

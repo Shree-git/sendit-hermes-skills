@@ -18,11 +18,17 @@ const rootDir = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const skillDir = join(rootDir, 'skills', 'sendit');
 const skillPath = join(skillDir, 'SKILL.md');
 const telegramPath = join(skillDir, 'TELEGRAM_SETUP.md');
+const referencesDir = join(skillDir, 'references');
 const scriptsDir = join(skillDir, 'scripts');
 const requiredScripts = [
   'install-sendit-hermes.mjs',
   'start-oauth-login.mjs',
   'complete-oauth-callback.mjs',
+];
+const requiredReferences = [
+  'remote-oauth.md',
+  'publishing-workflows.md',
+  'security.md',
 ];
 const requiredRootScripts = ['build-release.mjs', 'validate-skill.mjs', 'report-lobehub.mjs'];
 const canonicalMcpUrl = 'https://sendit.infiniteappsai.com/api/mcp';
@@ -63,7 +69,9 @@ function runNode(args, options = {}) {
 
 function validateStructure() {
   check(existsSync(skillDir), 'Missing skills/sendit directory.');
+  check(existsSync(referencesDir), 'Missing skills/sendit/references directory.');
   check(existsSync(scriptsDir), 'Missing skills/sendit/scripts directory.');
+  check(existsSync(join(rootDir, 'LICENSE')), 'Missing LICENSE.');
   check(existsSync(join(rootDir, 'README.md')), 'Missing README.md.');
   check(existsSync(join(rootDir, 'SUBMISSION.md')), 'Missing SUBMISSION.md.');
   check(existsSync(join(rootDir, 'package.json')), 'Missing package.json.');
@@ -75,6 +83,14 @@ function validateStructure() {
     check(existsSync(scriptPath), `Missing ${script}`);
     if (existsSync(scriptPath)) {
       check(statSync(scriptPath).isFile(), `${script} must be a file.`);
+    }
+  }
+
+  for (const reference of requiredReferences) {
+    const referencePath = join(referencesDir, reference);
+    check(existsSync(referencePath), `Missing references/${reference}`);
+    if (existsSync(referencePath)) {
+      check(statSync(referencePath).isFile(), `references/${reference} must be a file.`);
     }
   }
 
@@ -97,13 +113,18 @@ function validateSkillMarkdown() {
   const frontmatter = parseFrontmatter(skill);
 
   assertRegex(frontmatter, /^name:\s*sendit$/m, 'Frontmatter must set name: sendit.');
-  assertRegex(frontmatter, /^version:\s*0\.2\.0$/m, 'Frontmatter must set version: 0.2.0.');
+  assertRegex(frontmatter, /^version:\s*0\.2\.1$/m, 'Frontmatter must set version: 0.2.1.');
   assertRegex(
     frontmatter,
     /^author:\s*SendIt \/ Infinite Apps AI$/m,
     'Frontmatter must use SendIt / Infinite Apps AI author.',
   );
   assertRegex(frontmatter, /^license:\s*MIT$/m, 'Frontmatter must set license: MIT.');
+  assertIncludes(
+    frontmatter,
+    'licenseUrl: https://github.com/Shree-git/sendit-hermes-skills/blob/main/LICENSE',
+    'Frontmatter',
+  );
   assertIncludes(frontmatter, 'platforms: [linux, macos]', 'Frontmatter');
   assertRegex(frontmatter, /^category:\s*social-media$/m, 'Frontmatter must set top-level category for LobeHub.');
   assertIncludes(frontmatter, 'repository: https://github.com/Shree-git/sendit-hermes-skills', 'Frontmatter');
@@ -121,16 +142,42 @@ function validateSkillMarkdown() {
   assertIncludes(skill, '${HERMES_SKILL_DIR}/scripts/install-sendit-hermes.mjs', 'SKILL.md');
   assertIncludes(skill, '${HERMES_SKILL_DIR}/scripts/start-oauth-login.mjs', 'SKILL.md');
   assertIncludes(skill, '${HERMES_SKILL_DIR}/scripts/complete-oauth-callback.mjs', 'SKILL.md');
-  assertIncludes(skill, 'Never echo full `code` or', 'SKILL.md');
+  assertIncludes(skill, '## Permissions', 'SKILL.md');
+  assertIncludes(skill, 'references/remote-oauth.md', 'SKILL.md');
+  assertIncludes(skill, 'references/publishing-workflows.md', 'SKILL.md');
+  assertIncludes(skill, 'references/security.md', 'SKILL.md');
+  assertIncludes(skill, 'Never echo full OAuth `code` or', 'SKILL.md');
+  check(skill.split('\n').length <= 150, 'SKILL.md should stay concise at 150 lines or fewer.');
+}
+
+function validateReferences() {
+  const remoteOauth = readRequired(join(referencesDir, 'remote-oauth.md'));
+  const publishing = readRequired(join(referencesDir, 'publishing-workflows.md'));
+  const security = readRequired(join(referencesDir, 'security.md'));
+
+  assertIncludes(remoteOauth, canonicalMcpUrl, 'references/remote-oauth.md');
+  assertIncludes(remoteOauth, 'https://sendit.infiniteappsai.com/mcp', 'references/remote-oauth.md');
+  assertIncludes(remoteOauth, '${HERMES_SKILL_DIR}/scripts/start-oauth-login.mjs', 'references/remote-oauth.md');
+  assertIncludes(remoteOauth, '${HERMES_SKILL_DIR}/scripts/complete-oauth-callback.mjs', 'references/remote-oauth.md');
+  assertIncludes(remoteOauth, '/tmp/sendit-hermes/oauth.log', 'references/remote-oauth.md');
+  assertIncludes(publishing, 'mcp_sendit_create_upload_session', 'references/publishing-workflows.md');
+  assertIncludes(publishing, 'mcp_sendit_schedule_content', 'references/publishing-workflows.md');
+  assertIncludes(publishing, 'mcp_sendit_get_analytics', 'references/publishing-workflows.md');
+  assertIncludes(security, '~/.hermes/config.yaml', 'references/security.md');
+  assertIncludes(security, '/tmp/sendit-hermes', 'references/security.md');
+  assertIncludes(security, 'code` and `state`', 'references/security.md');
+  assertIncludes(security, 'does not require a SendIt API key', 'references/security.md');
 }
 
 function validateDocs() {
   const telegram = readRequired(telegramPath);
   const submission = readRequired(join(rootDir, 'SUBMISSION.md'));
   const readme = readRequired(join(rootDir, 'README.md'));
+  const license = readRequired(join(rootDir, 'LICENSE'));
 
   assertIncludes(telegram, canonicalMcpUrl, 'TELEGRAM_SETUP.md');
   assertIncludes(telegram, 'Do not ask the user for a SendIt API key', 'TELEGRAM_SETUP.md');
+  assertIncludes(license, 'MIT License', 'LICENSE');
   assertIncludes(submission, 'hermes skills tap add Shree-git/sendit-hermes-skills', 'SUBMISSION.md');
   assertIncludes(submission, 'hermes skills install Shree-git/sendit-hermes-skills/skills/sendit', 'SUBMISSION.md');
   assertIncludes(submission, 'optional-skills/mcp/sendit/', 'SUBMISSION.md');
@@ -138,7 +185,11 @@ function validateDocs() {
   assertIncludes(submission, 'npm run submit:lobehub', 'SUBMISSION.md');
   assertIncludes(submission, 'https://github.com/NousResearch/hermes-agent/pull/27727', 'SUBMISSION.md');
   assertIncludes(submission, 'https://lobehub.com/skills/shree-git-sendit-hermes-skills-sendit', 'SUBMISSION.md');
+  assertIncludes(submission, 'marketing-sales', 'SUBMISSION.md');
+  assertIncludes(submission, 'Version: `0.2.1`', 'SUBMISSION.md');
+  assertIncludes(submission, 'License URL:', 'SUBMISSION.md');
   assertIncludes(readme, 'skills/sendit/', 'README.md');
+  assertIncludes(readme, 'skills/sendit/references/', 'README.md');
   assertIncludes(readme, 'npm run submit:lobehub', 'README.md');
   assertIncludes(readme, 'https://github.com/Shree-git/sendit-hermes-skills', 'README.md');
   assertIncludes(readme, 'https://lobehub.com/skills/shree-git-sendit-hermes-skills-sendit', 'README.md');
@@ -221,6 +272,7 @@ function validateInstallerAgainstTempHome() {
 
 validateStructure();
 validateSkillMarkdown();
+validateReferences();
 validateDocs();
 validateScripts();
 validateInstallerAgainstTempHome();

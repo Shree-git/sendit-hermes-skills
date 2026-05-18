@@ -44,6 +44,7 @@ mkdirSync(releaseDir, { recursive: true });
 
 copyPath('README.md');
 copyPath('SUBMISSION.md');
+copyPath('LICENSE');
 copyPath('package.json');
 copyPath('package-lock.json');
 copyPath('.gitignore');
